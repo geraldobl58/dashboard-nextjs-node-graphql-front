@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Layout from '../components/Layouts';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -19,6 +20,8 @@ const Register = () => {
   const [message, setMessage] = useState(null);
 
   const [newUser] = useMutation(NEW_USER);
+
+  const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
@@ -53,6 +56,15 @@ const Register = () => {
             }
           }
         });
+
+
+        setMessage(`Usuário cadastrado com sucesso!`);
+
+        setTimeout(() => {
+          setMessage(null);
+          router.push('/login');
+        }, 3000);
+
       }catch(err){
         setMessage('Whoops: Usuário já cadastrado!');
 
@@ -213,7 +225,8 @@ const Register = () => {
                     font-black 
                     text-white 
                     uppercase 
-                    hover:bg-gray-900" 
+                    hover:bg-gray-900
+                    cursor-pointer"
                 />
             </form>
           </div>
