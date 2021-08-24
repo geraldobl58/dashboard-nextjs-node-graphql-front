@@ -92,7 +92,7 @@ const Register = () => {
                 />
                 <input 
                   type="submit"
-                  value="Register"
+                  value="Cadastrar"
                   className="
                     bg-gray-800 
                     w-full 
