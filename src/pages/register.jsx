@@ -12,7 +12,16 @@ const Register = () => {
       password: ''
     },
     validationSchema: Yup.object({
-      name: Yup.string().required('Campo Obrigátorio!')
+      name: Yup.string()
+               .required('Campo Obrigátorio!'),
+      nickname: Yup.string()
+                   .required('Campo Obrigátorio!'),
+      email: Yup.string()
+                .email('E-mail inválido!')
+                .required('Campo Obrigátorio!'),
+      password: Yup.string()
+                   .required('Campo Obrigátorio!')
+                   .min(6, 'Deve conter no minimo 6 caracteres!')
     }),
     onSubmit: values => {
       console.log(values);
@@ -84,6 +93,13 @@ const Register = () => {
                     focus:shadow-outline"
                 />
               </div>
+
+              {formik.touched.nickname && formik.errors.nickname ? (
+                <div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
+                  <p>Whoops: {formik.errors.nickname}</p>
+                </div>
+              ) : null}
+
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                   Email
@@ -106,6 +122,13 @@ const Register = () => {
                     focus:shadow-outline"
                 />
               </div>
+
+              {formik.touched.email && formik.errors.email ? (
+                <div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
+                  <p>Whoops: {formik.errors.email}</p>
+                </div>
+              ) : null}
+
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                   Senha
@@ -127,7 +150,15 @@ const Register = () => {
                     focus:outline-none 
                     focus:shadow-outline"
                 />
-                <input 
+              </div>
+
+              {formik.touched.password && formik.errors.password ? (
+                <div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
+                  <p>Whoops: {formik.errors.password}</p>
+                </div>
+              ) : null}
+
+              <input 
                   type="submit"
                   value="Cadastrar"
                   className="
@@ -140,7 +171,6 @@ const Register = () => {
                     uppercase 
                     hover:bg-gray-900" 
                 />
-              </div>
             </form>
           </div>
         </div>
