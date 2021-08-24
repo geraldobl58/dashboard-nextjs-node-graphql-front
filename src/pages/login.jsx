@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import Layout from '../components/Layouts';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation, gql } from '@apollo/client';
+import { useRouter } from 'next/router';
 
 const AUTHENTICATED_USER = gql`
   mutation authenticateUser($input: AuthenticateInput) {
@@ -12,6 +14,10 @@ const AUTHENTICATED_USER = gql`
 `
 
 const Login = () => {
+  const router = useRouter();
+
+  const [message, setMessage] = useState(null);
+
   const [authenticateUser] = useMutation(AUTHENTICATED_USER);
 
   const formik = useFormik({
@@ -39,16 +45,39 @@ const Login = () => {
           }
         });
 
-        console.log(data);
+        setMessage('Autenticando...');
+
+        const { token } = data.authenticateUser;
+
+        localStorage.setItem('token', token);
+
+        setTimeout(() => {
+          setMessage(null);
+          router.push('/');
+        }, 3000);
+
       }catch(err) {
-        console.log(err);
+        setMessage('Login/Senha Incorreto!');
+
+        setTimeout(() => {
+          setMessage(null);
+        }, 3000);
       }
     }
   });
 
+  const showMessage = () => {
+    return (
+      <div className="bg-white py-2 px-3 w-full my-3 max-w-sm text-center mx-auto">
+        <p className="uppercase font-black">{message}</p>
+      </div>
+    )
+  } 
+
   return (
     <>
       <Layout>
+        {message && showMessage()}
         <h1 className="text-center text-2xl font-black text-white uppercase">
           Faça seu login
         </h1>
