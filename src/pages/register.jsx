@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Layout from '../components/Layouts';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -15,6 +16,8 @@ mutation newUser($input: UserInput) {
 `
 
 const Register = () => {
+  const [message, setMessage] = useState(null);
+
   const [newUser] = useMutation(NEW_USER);
 
   const formik = useFormik({
@@ -51,14 +54,27 @@ const Register = () => {
           }
         });
       }catch(err){
-        console.log(err);
+        setMessage('Whoops: Usuário já cadastrado!');
+
+        setTimeout(() => {
+          setMessage(null);
+        }, 3000);
       }
     }
   });
 
+  const showMessage = () => {
+    return (
+      <div className="bg-white py-2 px-3 w-full my-3 max-w-sm text-center mx-auto">
+        <p className="uppercase font-black">{message}</p>
+      </div>
+    )
+  } 
+
   return (
     <>
       <Layout>
+        {message && showMessage()}
         <h1 className="text-center text-2xl font-black text-white uppercase">
           Cadastro de Usuários
         </h1>
