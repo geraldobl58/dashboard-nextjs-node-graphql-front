@@ -1,6 +1,21 @@
 import Layout from '../components/Layouts';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 const Register = () => {
+
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      nickname: '',
+      email: '',
+      password: ''
+    },
+    onSubmit: values => {
+      console.log(values);
+    }
+  });
+
   return (
     <>
       <Layout>
@@ -10,7 +25,10 @@ const Register = () => {
 
         <div className="flex justify-center mt-5">
           <div className="w-full max-w-sm">
-            <form className="bg-white rounded shadow-md px-8 pt-6 pb-8 mb-4">
+            <form 
+              className="bg-white rounded shadow-md px-8 pt-6 pb-8 mb-4"
+              onSubmit={formik.handleSubmit}
+            >
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
                   Nome
@@ -19,6 +37,8 @@ const Register = () => {
                   id="name"
                   type="text"
                   placeholder="Digite seu nome"
+                  value={formik.values.name}
+                  onChange={formik.handleChange}
                   className="
                     shadow 
                     appearance-none border
@@ -39,6 +59,8 @@ const Register = () => {
                   id="nickname"
                   type="text"
                   placeholder="Digite seu apelido"
+                  value={formik.values.nickname}
+                  onChange={formik.handleChange}
                   className="
                     shadow 
                     appearance-none border
@@ -59,6 +81,8 @@ const Register = () => {
                   id="email"
                   type="email"
                   placeholder="Digite seu e-mail"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
                   className="
                     shadow 
                     appearance-none border
@@ -79,6 +103,8 @@ const Register = () => {
                   id="password"
                   type="password"
                   placeholder="Digite sua senha"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
                   className="
                     shadow 
                     appearance-none border
