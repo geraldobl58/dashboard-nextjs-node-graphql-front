@@ -11,6 +11,9 @@ const Register = () => {
       email: '',
       password: ''
     },
+    validationSchema: Yup.object({
+      name: Yup.string().required('Campo Obrigátorio!')
+    }),
     onSubmit: values => {
       console.log(values);
     }
@@ -39,6 +42,7 @@ const Register = () => {
                   placeholder="Digite seu nome"
                   value={formik.values.name}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   className="
                     shadow 
                     appearance-none border
@@ -51,6 +55,13 @@ const Register = () => {
                     focus:shadow-outline"
                 />
               </div>
+              
+              {formik.touched.name && formik.errors.name ? (
+                <div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
+                  <p>Whoops: {formik.errors.name}</p>
+                </div>
+              ) : null}
+              
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nickname">
                   Apelido
