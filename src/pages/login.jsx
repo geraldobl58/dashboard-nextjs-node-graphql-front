@@ -5,7 +5,7 @@ const Login = () => {
     <>
       <Layout>
         <h1 className="text-center text-2xl font-black text-white uppercase">
-          Dashboard Sistema
+          Faça seu login
         </h1>
 
         <div className="flex justify-center mt-5">
