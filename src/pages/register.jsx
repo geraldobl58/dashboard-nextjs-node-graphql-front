@@ -1,8 +1,21 @@
 import Layout from '../components/Layouts';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useMutation, gql } from '@apollo/client';
+
+const NEW_USER = gql`
+mutation newUser($input: UserInput) {
+  newUser(input: $input) {
+    id
+    name
+    nickname
+    email
+  }
+}
+`
 
 const Register = () => {
+  const [newUser] = useMutation(NEW_USER);
 
   const formik = useFormik({
     initialValues: {
@@ -23,8 +36,23 @@ const Register = () => {
                    .required('Campo Obrigátorio!')
                    .min(6, 'Deve conter no minimo 6 caracteres!')
     }),
-    onSubmit: values => {
-      console.log(values);
+    onSubmit: async values => {
+      const { name, nickname, email, password } = values;
+
+      try{
+        await newUser({
+          variables: {
+            input: {
+              name, 
+              nickname, 
+              email, 
+              password
+            }
+          }
+        });
+      }catch(err){
+        console.log(err);
+      }
     }
   });
 
