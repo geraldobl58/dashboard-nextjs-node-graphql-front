@@ -1,6 +1,38 @@
 import Layout from "../components/Layouts";
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 const NewClient = () => {
+
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      nickname: '',
+      company: '',
+      email: '',
+      phone: '',
+    },
+    validationSchema: Yup.object({
+      name: Yup.string()
+               .required('Campo Obrigátorio!'),
+      nickname: Yup.string()
+               .required('Campo Obrigátorio!'),
+      company: Yup.string()
+               .required('Campo Obrigátorio!'),
+      company: Yup.string()
+               .required('Campo Obrigátorio!'),
+      email: Yup.string()
+                .email('E-mail Inválido!')
+               .required('Campo Obrigátorio!'),
+      phone: Yup.string()
+               .required('Campo Obrigátorio!')
+    }),
+    onSubmit: values => {
+      console.log(values)
+    }
+  });
+
+
   return (
     <Layout>
       <h1 className="text-2xl text-gray-800 font-black uppercase">
@@ -20,9 +52,9 @@ const NewClient = () => {
                 id="name"
                 type="text"
                 placeholder="Digite seu nome"
-                // onChange={formik.handleChange}
-                // onBlur={formik.handleBlur}
-                // value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.name}
                 className="
                   shadow 
                   appearance-none border
@@ -35,6 +67,13 @@ const NewClient = () => {
                   focus:shadow-outline"
               />
             </div>
+
+            {formik.touched.name && formik.errors.name ? (
+              <div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
+                <p>Whoops: {formik.errors.name}</p>
+              </div>
+            ) : null}
+
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nickname">
                 Apelido
@@ -43,9 +82,9 @@ const NewClient = () => {
                 id="nickname"
                 type="text"
                 placeholder="Digite seu apelido"
-                // onChange={formik.handleChange}
-                // onBlur={formik.handleBlur}
-                // value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.nickname}
                 className="
                   shadow 
                   appearance-none border
@@ -58,6 +97,13 @@ const NewClient = () => {
                   focus:shadow-outline"
               />
             </div>
+
+            {formik.touched.nickname && formik.errors.nickname ? (
+              <div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
+                <p>Whoops: {formik.errors.nickname}</p>
+              </div>
+            ) : null}
+
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="company">
                 Empresa
@@ -66,9 +112,9 @@ const NewClient = () => {
                 id="company"
                 type="text"
                 placeholder="Digite sua empresa"
-                // onChange={formik.handleChange}
-                // onBlur={formik.handleBlur}
-                // value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.company}
                 className="
                   shadow 
                   appearance-none border
@@ -81,6 +127,13 @@ const NewClient = () => {
                   focus:shadow-outline"
               />
             </div>
+
+            {formik.touched.company && formik.errors.company ? (
+              <div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
+                <p>Whoops: {formik.errors.company}</p>
+              </div>
+            ) : null}
+
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                 E-mail
@@ -89,9 +142,9 @@ const NewClient = () => {
                 id="email"
                 type="email"
                 placeholder="Digite seu e-mail"
-                // onChange={formik.handleChange}
-                // onBlur={formik.handleBlur}
-                // value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.email}
                 className="
                   shadow 
                   appearance-none border
@@ -104,6 +157,13 @@ const NewClient = () => {
                   focus:shadow-outline"
               />
             </div>
+
+            {formik.touched.email && formik.errors.email ? (
+              <div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
+                <p>Whoops: {formik.errors.email}</p>
+              </div>
+            ) : null}
+
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
                 Telefone
@@ -112,9 +172,9 @@ const NewClient = () => {
                 id="phone"
                 type="tel"
                 placeholder="Digite seu telefone"
-                // onChange={formik.handleChange}
-                // onBlur={formik.handleBlur}
-                // value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.phone}
                 className="
                   shadow 
                   appearance-none border
@@ -127,6 +187,13 @@ const NewClient = () => {
                   focus:shadow-outline"
               />
             </div>
+
+            {formik.touched.phone && formik.errors.phone ? (
+              <div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
+                <p>Whoops: {formik.errors.phone}</p>
+              </div>
+            ) : null}
+
             <input 
               type="submit"
               value="Cadastrar"
