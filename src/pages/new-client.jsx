@@ -1,8 +1,26 @@
+import { useRouter } from 'next/router';
 import Layout from "../components/Layouts";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { gql, useMutation } from '@apollo/client';
+
+const NEW_CLIENT = gql`
+  mutation newClient($input: ClientInput) {
+    newClient(input: $input) {
+      id
+      name
+      nickname
+      company
+      email
+      phone
+    }
+  }
+`
 
 const NewClient = () => {
+  const router = useRouter();
+
+  const [newClient] = useMutation(NEW_CLIENT);
 
   const formik = useFormik({
     initialValues: {
@@ -19,16 +37,32 @@ const NewClient = () => {
                .required('Campo Obrigátorio!'),
       company: Yup.string()
                .required('Campo Obrigátorio!'),
-      company: Yup.string()
-               .required('Campo Obrigátorio!'),
       email: Yup.string()
                 .email('E-mail Inválido!')
                .required('Campo Obrigátorio!'),
       phone: Yup.string()
                .required('Campo Obrigátorio!')
     }),
-    onSubmit: values => {
-      console.log(values)
+    onSubmit: async values => {
+      const { name, nickname, company, email, phone } = values;
+
+      try {
+        const { data } = await newClient({
+          variables: {
+            input: {
+              name,
+              nickname,
+              company,
+              email,
+              phone
+            }
+          }
+        });
+
+        router.push('/');
+      }catch(err) {
+        console.log(err);
+      }
     }
   });
 
@@ -42,6 +76,7 @@ const NewClient = () => {
       <div className="flex justify-center mt-5">
         <div className="w-full max-w-lg">
           <form
+            onSubmit={formik.handleSubmit}
             className="bg-white shadow-md px-8 pt-6 pb-8 mb-4"
           >
             <div className="mb-4">
