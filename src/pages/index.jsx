@@ -1,5 +1,6 @@
 import Layout from '../components/Layouts'
 import { gql, useQuery } from '@apollo/client';
+import Link from 'next/link';
 
 const GET_CLIENTS_SELLER = gql`
   query getClientsSeller {
@@ -24,6 +25,22 @@ const Home = () => {
       <h1 className="text-2xl text-gray-800 font-black uppercase">
         Listagem de Clientes
       </h1>
+
+      <Link href="/new-client">
+        <a className="
+          bg-blue-800 
+          py-2 
+          px-5 
+          mt-5 
+          inline-block
+          text-white
+          text-sm
+          rounded
+          uppercase
+          font-black
+          hover:bg-gray-800"
+        >Novo Cliente</a>
+      </Link>
 
       <table className="table-auto shadow-md mt-10 w-full w-lg">
         <thead className="bg-gray-800">
